@@ -1,0 +1,36 @@
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class ARPSimulation {
+    public static void main(String[] args) {
+        // ARP Table: Maps IP addresses to MAC addresses
+        HashMap<String, String> arpTable = new HashMap<>();
+        arpTable.put("192.168.1.1", "00:1A:2B:3C:4D:5E");
+        arpTable.put("192.168.1.2", "00:1A:2B:3C:4D:5F");
+        arpTable.put("192.168.1.3", "00:1A:2B:3C:4D:60");
+        arpTable.put("192.168.1.4", "00:1A:2B:3C:4D:61");
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== ARP Simulation ===");
+        while (true) {
+            System.out.print("\nEnter an IP address (or type 'exit' to quit): ");
+            String ipAddress = scanner.nextLine();
+
+            if (ipAddress.equalsIgnoreCase("exit")) {
+                System.out.println("Exiting ARP Simulation.");
+                break;
+            }
+
+            // Check ARP Table
+            if (arpTable.containsKey(ipAddress)) {
+                System.out.println("ARP Response: IP " + ipAddress + " is at MAC " + arpTable.get(ipAddress));
+            } else {
+                System.out.println("No entry found for IP " + ipAddress + ". Sending ARP request...");
+                System.out.println("No response received. IP " + ipAddress + " is unreachable.");
+            }
+        }
+
+        scanner.close();
+    }
+}
