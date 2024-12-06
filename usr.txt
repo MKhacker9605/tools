@@ -1,41 +1,45 @@
-3. SQL Injection with SQLmap
-Install SQLmap:
-sudo apt-get install sqlmap
-Find database:
-sqlmap -u [url] --batch --dbs
-Find tables:
-sqlmap -u [url] --batch -D [database_name] -T [table_name] --columns
-4. Buffer Overflow Attack
-Compile a C program:
-gcc program.c -o output
-Run with excessive input:
-./output $(python3 -c "print('A' * 100)")
-Debug with GDB:
-gdb output
-5. Cross-Site Scripting (XSS)
-Install XSS-Freak tool:
-git clone https://github.com/AssetX/XSS-Freak.git
-Install dependencies:
-sudo pip3 install -r requirements.txt
-Run the tool:
-python3 XSS-Freak.py -h
-6. Web Application Penetration Testing
-Use Vega tool for scans:
-Open Vega from applications or terminal.
-Run SQLmap:
-sqlmap -u [url]
-7. Secure Test Cases
-Test SSL security:
-tlssled [URL] [port]
-8. Penetration Testing Using Kali Linux
-Scan open ports:
-nmap -sV target_ip
-Check vulnerabilities:
-nikto -h http://target_ip
-Exploit with Metasploit:
-Start: msfconsole
-Set target: set RHOSTS target_ip
-9. Password Cracking
-Brute-force with Hydra:
-hydra -l user_list -P password_list ftp://target_ip
-GUI-based cracking: Open Johnny from applications.
+import java.io.*;  
+import java.net.*;  
+
+public class Server {
+    public static void main(String[] args) throws IOException {
+        ServerSocket server = new ServerSocket(12345);
+        System.out.println("Server is listening...");
+        Socket socket = server.accept();
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+
+        String msg;
+        while (!(msg = in.readLine()).equalsIgnoreCase("exit")) {
+            System.out.println("Client: " + msg);
+            System.out.print("You: ");
+            out.println(console.readLine());
+        }
+        socket.close();
+        server.close();
+    }
+}
+
+
+import java.io.*;  
+import java.net.*;  
+
+public class Client {
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("localhost", 12345);
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+
+        String msg;
+        System.out.println("Connected to server. Type 'exit' to quit.");
+        while (true) {
+            System.out.print("You: ");
+            out.println(console.readLine());
+            if ((msg = in.readLine()).equalsIgnoreCase("exit")) break;
+            System.out.println("Server: " + msg);
+        }
+        socket.close();
+    }
+}
