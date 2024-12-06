@@ -34,3 +34,26 @@ public class ARPSimulation {
         scanner.close();
     }
 }
+
+
+
+class ARP:
+    def __init__(self, ip, mac):
+        self.ip = ip
+        self.mac = mac
+
+    def arp_request(self, target_ip):
+        print(f"ARP Request: Who has {target_ip}? Tell {self.ip}")
+
+    def arp_reply(self, target_ip):
+        print(f"ARP Reply: {target_ip} is at {self.mac}")
+
+# Simulate devices
+device1 = ARP("192.168.1.2", "00:11:22:33:44:55")
+device2 = ARP("192.168.1.3", "00:11:22:33:44:56")
+
+# Simulate ARP Request from device1 to find MAC of device2
+device1.arp_request(device2.ip)
+
+# Simulate ARP Reply from device2
+device2.arp_reply(device2.ip)
