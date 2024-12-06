@@ -50,3 +50,9 @@ proc finish {} {
 }
 
 $ns run
+
+
+
+export PATH=$PATH:/path/to/ns-allinone/bin:/path/to/ns-allinone/tcl8.5.10/unix:/path/to/ns-allinone/tk8.5.10/unix
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/ns-allinone/otcl-1.14:/path/to/ns-allinone/lib
+export TCL_LIBRARY=/path/to/ns-allinone/tcl8.5.10/library
