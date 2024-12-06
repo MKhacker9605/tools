@@ -1,0 +1,55 @@
+import java.io.*;
+import java.net.*;
+
+public class FileServer {
+    public static void main(String[] args) throws IOException {
+        ServerSocket serverSocket = new ServerSocket(12345);
+        System.out.println("Server is waiting for a connection...");
+        Socket socket = serverSocket.accept();
+        System.out.println("Client connected.");
+
+        // File to send
+        File file = new File("file_to_send.txt");
+        FileInputStream fis = new FileInputStream(file);
+        BufferedOutputStream out = new BufferedOutputStream(socket.getOutputStream());
+
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = fis.read(buffer)) != -1) {
+            out.write(buffer, 0, bytesRead);
+        }
+
+        fis.close();
+        out.close();
+        socket.close();
+        serverSocket.close();
+        System.out.println("File sent successfully.");
+    }
+}
+
+
+import java.io.*;
+import java.net.*;
+
+public class FileClient {
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("localhost", 12345);
+        System.out.println("Connected to the server.");
+
+        // File to save
+        File file = new File("received_file.txt");
+        FileOutputStream fos = new FileOutputStream(file);
+        BufferedInputStream in = new BufferedInputStream(socket.getInputStream());
+
+        byte[] buffer = new byte[4096];
+        int bytesRead;
+        while ((bytesRead = in.read(buffer)) != -1) {
+            fos.write(buffer, 0, bytesRead);
+        }
+
+        fos.close();
+        in.close();
+        socket.close();
+        System.out.println("File received successfully.");
+    }
+}
