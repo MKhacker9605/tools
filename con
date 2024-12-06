@@ -1,0 +1,52 @@
+# Define simulation parameters
+set ns [new Simulator]
+set tracefile [open out.tr w]
+set namfile [open out.nam w]
+$ns trace-all $tracefile
+$ns namtrace-all $namfile
+
+# Create network nodes
+set n0 [$ns node]
+set n1 [$ns node]
+set n2 [$ns node]
+
+# Create links between nodes
+$ns duplex-link $n0 $n1 1Mb 10ms DropTail
+$ns duplex-link $n1 $n2 1Mb 10ms DropTail
+
+# Attach TCP agent (using Tahoe) and set up traffic
+set tcp [new Agent/TCP]
+$tcp set class_ 1
+$tcp set packetSize_ 1000
+$tcp set window_ 50
+$tcp set maxcwnd_ 50
+$tcp set type_ Tahoe
+$ns attach-agent $n0 $tcp
+
+# Attach a sink agent to node n2
+set sink [new Agent/TCPSink]
+$ns attach-agent $n2 $sink
+$ns connect $tcp $sink
+
+# Create a CBR traffic generator
+set cbr [new Application/Traffic/CBR]
+$cbr set packetSize_ 1000
+$cbr set rate_ 0.5Mb
+$cbr attach-agent $tcp
+
+# Schedule events
+$ns at 0.1 "$cbr start"
+$ns at 4.0 "$cbr stop"
+$ns at 5.0 "finish"
+
+# Finish procedure
+proc finish {} {
+    global ns tracefile namfile
+    $ns flush-trace
+    close $tracefile
+    close $namfile
+    exec nam out.nam &
+    exit 0
+}
+
+$ns run
