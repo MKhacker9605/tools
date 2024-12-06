@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Subnetting {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Input IP address and subnet mask
+        System.out.print("Enter IP address (e.g., 192.168.1.10): ");
+        String ip = scanner.nextLine();
+        System.out.print("Enter subnet mask (e.g., 255.255.255.0): ");
+        String mask = scanner.nextLine();
+
+        // Convert IP and subnet mask to binary
+        String[] ipParts = ip.split("\\.");
+        String[] maskParts = mask.split("\\.");
+        int[] ipBinary = new int[4];
+        int[] maskBinary = new int[4];
+
+        for (int i = 0; i < 4; i++) {
+            ipBinary[i] = Integer.parseInt(ipParts[i]) & Integer.parseInt(maskParts[i]);
+            maskBinary[i] = 255 - Integer.parseInt(maskParts[i]);
+        }
+
+        // Calculate network address and broadcast address
+        int[] network = ipBinary;
+        int[] broadcast = new int[4];
+        for (int i = 0; i < 4; i++) {
+            broadcast[i] = ipBinary[i] | maskBinary[i];
+        }
+
+        // Display results
+        System.out.println("Network Address: " + formatIP(network));
+        System.out.println("Broadcast Address: " + formatIP(broadcast));
+        System.out.println("Usable IP Range: " + formatIP(network) + " - " + formatIP(broadcast));
+    }
+
+    // Helper function to format an IP address
+    private static String formatIP(int[] octets) {
+        return octets[0] + "." + octets[1] + "." + octets[2] + "." + octets[3];
+    }
+}
