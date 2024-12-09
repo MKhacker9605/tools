@@ -15,3 +15,13 @@ int main(int argc, char *argv[]) {
     }
     return 0;
 }
+
+
+sudo apt install gcc
+gcc --version
+gcc hello.c -o hello
+./hello
+gdb vuln
+break vulnerable_function
+run $(python3 -c "print('A' * 100)")
+info registers
